@@ -14,6 +14,7 @@ class Sudoku:
             print("invalid cooridinates")
             return
         if (self.remaining == 0):
+            print(f"Trying to add {num} at row {row} col {col}")
             print("The matrix is full")
             return
         if (num < 1 or num > 9 or not isinstance(num, int)):
@@ -21,6 +22,7 @@ class Sudoku:
             return
         self.remaining -= 1
         self.display[row][col] = num
+        self.candidate[row][col] = set()
         for c in range(9):
             if num in self.candidate[row][c]:
                 self.candidate[row][c].remove(num)
@@ -39,7 +41,6 @@ class Sudoku:
                     self.candidate[base_r + r][base_c + c].remove(num)
                     if len(self.candidate[base_r + r][base_c + c]) == 1:
                         self.queue.append([base_r + r, base_c + c, list(self.candidate[base_r + r][base_c + c])[0]])
-        self.candidate[row][col] = set()
         return
     
     def show_display(self):
@@ -68,25 +69,15 @@ class Sudoku:
         return
     
     def scan_single(self):
+        print("scanning single>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         while self.queue:
             r, c, num = self.queue.pop(0)
+            print(f"Insert row {r} col {c} with {num}")
             self.insert(r, c, num)
-            # print("Scanning singles...")
-            # before = self.remaining
-            # for r in range(9):
-            #     for c in range(9):
-            #         if len(self.candidate[r][c]) == 1:
-            #             num = list(self.candidate[r][c])[0]
-            #             print(f"row {r} col {c} add {num}")
-            #             self.insert(r, c, num)
-            # if self.remaining == before or self.remaining == 0:
-            #     break
-            # else:
-            #     before = self.remaining
         return
 
-    def scan_must(self):
-        print("scanning must")
+    def scan_row(self):
+        print("scanning row>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         for r in range(9):
             count = [0 for x in range(9)]
             for c in range(9):
@@ -99,6 +90,10 @@ class Sudoku:
                             print(f"row {r} col {c} add {i + 1}")
                             self.insert(r, c, i + 1)
                             break
+        return
+    
+    def scan_column(self):
+        print("scanning column>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         for c in range(9):
             count = [0 for x in range(9)]
             for r in range(9):
@@ -111,6 +106,10 @@ class Sudoku:
                             print(f"row {r} col {c} add {i + 1}")
                             self.insert(r, c, i + 1)
                             break
+        return
+
+    def scan_square(self):
+        print("scanning square>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         for start in [[0, 0], [0, 3], [0, 6], [3, 0], [3, 3], [3, 6], [6, 0], [6, 3], [6, 6]]:
             count = [0 for x in range(9)]
             for delta in [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]:

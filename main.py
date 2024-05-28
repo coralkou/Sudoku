@@ -1,7 +1,8 @@
 from sudoku import Sudoku
 
 game = Sudoku()
-with open('medium.txt', 'r') as file:
+level = input("What is the level of the game? (easy, medium, hard, expert, master, extreme)"  )
+with open(f"{level}.txt", 'r') as file:
     file_contents = file.read()
 for i in range(9):
     for j in range(9):
@@ -10,11 +11,24 @@ for i in range(9):
             game.insert(i, j, int(digit))
 
 game.show_display()
+
+
 ##solution
-game.scan_single()
-#game.scan_must()
-#game.scan_single()
+while game.remaining != 0:
+    before = game.remaining
+    game.scan_single()
+    game.scan_row()
+    game.scan_single()
+    game.scan_column()
+    game.scan_single()
+    game.scan_square()
+    game.scan_single
+    if game.remaining == before:
+        print(f"Current method is not sufficient, remaining {game.remaining}")
+        game.show_candidate()
+        break
+
 
 game.show_display()
-if game.remaining != 0:
-    game.show_candidate()
+# if game.remaining != 0:
+#     game.show_candidate()
