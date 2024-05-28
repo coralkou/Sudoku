@@ -24,21 +24,21 @@ class Sudoku:
         for c in range(9):
             if num in self.candidate[row][c]:
                 self.candidate[row][c].remove(num)
-                if len(self.candidate[row][c]) == 1:
-                    self.queue.append([row, c, list(self.candidate[row][c])[0]])
+                # if len(self.candidate[row][c]) == 1:
+                #     self.queue.append([row, c, list(self.candidate[row][c])[0]])
         for r in range(9):
             if num in self.candidate[r][col]:
                 self.candidate[r][col].remove(num)
-                if len(self.candidate[r][col]) == 1:
-                    self.queue.append([r, col, list(self.candidate[r][col])[0]])
+                # if len(self.candidate[r][col]) == 1:
+                #     self.queue.append([r, col, list(self.candidate[r][col])[0]])
         base_r = (row //3) * 3
         base_c = (col //3) * 3
         for r in range(3):
             for c in range(3):
                 if num in self.candidate[base_r + r][base_c + c]:
                     self.candidate[base_r + r][base_c + c].remove(num)
-                    if len(self.candidate[base_r + r][base_c + c]) == 1:
-                        self.queue.append([base_r + r, base_c + c, list(self.candidate[base_r + r][base_c + c])[0]])
+                    # if len(self.candidate[base_r + r][base_c + c]) == 1:
+                    #     self.queue.append([base_r + r, base_c + c, list(self.candidate[base_r + r][base_c + c])[0]])
         self.candidate[row][col] = set()
         return
     
@@ -68,21 +68,23 @@ class Sudoku:
         return
     
     def scan_single(self):
-        while self.queue:
-            r, c, num = self.queue.pop(0)
-            self.insert(r, c, num)
-            # print("Scanning singles...")
-            # before = self.remaining
-            # for r in range(9):
-            #     for c in range(9):
-            #         if len(self.candidate[r][c]) == 1:
-            #             num = list(self.candidate[r][c])[0]
-            #             print(f"row {r} col {c} add {num}")
-            #             self.insert(r, c, num)
-            # if self.remaining == before or self.remaining == 0:
-            #     break
-            # else:
-            #     before = self.remaining
+        # while self.queue:
+            # r, c, num = self.queue.pop(0)
+            # print(f"row {r} col {c} add {num}")
+            # self.insert(r, c, num)
+        while True:
+            print("Scanning singles...")
+            before = self.remaining
+            for r in range(9):
+                for c in range(9):
+                    if len(self.candidate[r][c]) == 1:
+                        num = list(self.candidate[r][c])[0]
+                        print(f"row {r} col {c} add {num}")
+                        self.insert(r, c, num)
+            if self.remaining == before or self.remaining == 0:
+                break
+            else:
+                before = self.remaining
         return
 
     def scan_must(self):

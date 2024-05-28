@@ -11,9 +11,10 @@ for i in range(9):
 
 game.show_display()
 ##solution
+print(game.queue)
 game.scan_single()
-#game.scan_must()
-#game.scan_single()
+game.scan_must()
+game.scan_single()
 
 game.show_display()
 if game.remaining != 0:
