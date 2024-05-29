@@ -31,5 +31,3 @@ while game.remaining != 0:
 
 
 game.show_display()
-# if game.remaining != 0:
-#     game.show_candidate()

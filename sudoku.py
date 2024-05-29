@@ -115,7 +115,6 @@ class Sudoku:
                                     self.candidate[r2][c] = self.candidate[r2][c].replace(num, '')
                 else:
                     if len(self.candidate[r][c]) == 2:
-                        print(f"added double {self.candidate[r][c]}")
                         double.add(self.candidate[r][c])
                 for num in self.candidate[r][c]:
                     count[int(num) - 1] += 1
