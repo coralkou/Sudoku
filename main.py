@@ -22,7 +22,8 @@ while game.remaining != 0:
     game.scan_column()
     game.scan_single()
     game.scan_square()
-    game.scan_single
+    game.scan_single()
+
     if game.remaining == before:
         print(f"Current method is not sufficient, remaining {game.remaining}")
         game.show_candidate()
